@@ -1,6 +1,6 @@
 import { createLibp2p } from 'libp2p';
-import { webRTC } from 'libp2p-webrtc';
-import { webSockets } from 'libp2p-websockets';
+import { webRTC } from '@libp2p/webrtc';
+import { webSockets } from '@libp2p/websockets';
 import { BrowserType, EncryptedHistoryItem, HistoryItem, PeerInfo, SyncMessage, SyncSettings } from './types';
 import { decryptData, encryptData, generateDeviceId } from './crypto';
 
