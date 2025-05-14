@@ -28,7 +28,8 @@ export function decryptData(encryptedData: string, iv: string, secret: string): 
 export function generateDeviceId(): string {
   // Generate a random device ID
   const randomBytes = new Uint8Array(16);
-  window.crypto.getRandomValues(randomBytes);
+  // Use self.crypto for service worker compatibility
+  (self.crypto || crypto).getRandomValues(randomBytes);
   
   return Array.from(randomBytes)
     .map(b => b.toString(16).padStart(2, '0'))

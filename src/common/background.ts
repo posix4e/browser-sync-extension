@@ -64,7 +64,7 @@ async function initialize() {
       clearInterval(syncInterval);
     }
     
-    syncInterval = window.setInterval(async () => {
+    syncInterval = self.setInterval(async () => {
       if (isConnected) {
         await syncHistory();
       }
