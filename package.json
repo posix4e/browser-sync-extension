@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "libp2p": "^0.46.21",
-    "libp2p-webrtc": "^3.2.0",
-    "libp2p-websockets": "^6.0.3",
+    "@libp2p/webrtc": "^5.2.12",
+    "@libp2p/websockets": "^9.2.10",
     "crypto-js": "^4.1.1"
   }
 }
