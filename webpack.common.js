@@ -30,10 +30,8 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: './src/common/manifest.json', to: 'manifest.json' },
         { from: './src/common/popup.html', to: 'popup.html' },
         { from: './src/common/options.html', to: 'options.html' },
-        { from: './src/common/icons', to: 'icons' },
       ],
     }),
   ],
