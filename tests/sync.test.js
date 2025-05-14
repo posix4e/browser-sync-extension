@@ -15,7 +15,7 @@ describe('Browser History Sync Extension', () => {
     
     // Launch browser with the extension
     browser = await puppeteer.launch({
-      headless: false,
+      headless: 'new',
       args: [
         `--disable-extensions-except=${path.join(__dirname, '../dist/chrome')}`,
         `--load-extension=${path.join(__dirname, '../dist/chrome')}`,
