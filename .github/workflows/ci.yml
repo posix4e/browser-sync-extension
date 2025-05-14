@@ -17,15 +17,20 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20'
+        cache: 'npm'
     
-    - name: Install dependencies
-      run: npm install
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y imagemagick chromium-browser
+    
+    - name: Install npm dependencies
+      env:
+        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+      run: npm ci
     
     - name: Build extensions
       run: npm run build
-    
-    - name: Install ImageMagick
-      run: sudo apt-get update && sudo apt-get install -y imagemagick
       
     - name: Create placeholder icons for testing
       run: |
@@ -40,13 +45,6 @@ jobs:
         
         cp dist/chrome/icons/* dist/firefox/icons/
         cp dist/chrome/icons/* dist/safari/icons/
-    
-    # Node.js is already set up earlier in the workflow
-    
-    - name: Install Chrome for testing
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser
         
     - name: Run tests with Puppeteer
       env:
