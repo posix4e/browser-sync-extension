@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
@@ -25,6 +25,9 @@ jobs:
     - name: Build extensions
       run: npm run build
     
+    - name: Install ImageMagick
+      run: sudo apt-get update && sudo apt-get install -y imagemagick
+      
     - name: Create placeholder icons for testing
       run: |
         mkdir -p dist/chrome/icons
@@ -39,15 +42,21 @@ jobs:
         cp dist/chrome/icons/* dist/firefox/icons/
         cp dist/chrome/icons/* dist/safari/icons/
     
-    - name: Run tests
-      uses: mujo-code/puppeteer-headful@16.6.0
+    # Node.js is already set up earlier in the workflow
+    
+    - name: Install Chrome for testing
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser
+        
+    - name: Run tests with Puppeteer
       env:
         CI: 'true'
-      with:
-        args: npm test
+        PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
+      run: npm test
     
     - name: Upload extension artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: browser-extensions
         path: |
@@ -56,7 +65,7 @@ jobs:
           dist/safari/
     
     - name: Upload screenshots
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: screenshots
         path: screenshots/
