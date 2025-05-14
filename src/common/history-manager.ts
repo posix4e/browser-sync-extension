@@ -3,7 +3,7 @@ import { hashUrl } from './crypto';
 
 export class HistoryManager {
   private browserType: BrowserType;
-  private settings: SyncSettings;
+  private settings: SyncSettings = {} as SyncSettings;
   private deviceId: string;
   
   constructor(browserType: BrowserType, deviceId: string) {

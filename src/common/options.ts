@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         customServerFields.style.display = 'none';
       }
     } catch (error) {
-      showStatus('Error loading settings: ' + error.message, false);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      showStatus('Error loading settings: ' + errorMessage, false);
     }
   }
   
@@ -71,7 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     } catch (error) {
-      showStatus('Error saving settings: ' + error.message, false);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      showStatus('Error saving settings: ' + errorMessage, false);
     }
   }
   

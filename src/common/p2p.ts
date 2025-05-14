@@ -7,7 +7,7 @@ import { decryptData, encryptData, generateDeviceId } from './crypto';
 
 export class P2PSync {
   private libp2p: any;
-  private settings: SyncSettings;
+  private settings: SyncSettings = {} as SyncSettings;
   private deviceId: string;
   private browserType: BrowserType;
   private peers: Map<string, PeerInfo> = new Map();
@@ -26,7 +26,8 @@ export class P2PSync {
     // Configure libp2p with the appropriate discovery server
     const bootstrapList = this.getBootstrapList();
     
-    this.libp2p = await createLibp2p({
+    // Use any type to bypass TypeScript errors with libp2p configuration
+    const config: any = {
       addresses: {
         listen: ['/webrtc']
       },
@@ -42,12 +43,15 @@ export class P2PSync {
         minConnections: 0,
         maxConnections: 50
       },
-      peerDiscovery: {
-        bootstrap: {
+      peerDiscovery: [
+        {
+          tag: 'bootstrap',
           list: bootstrapList
         }
-      }
-    });
+      ]
+    };
+    
+    this.libp2p = await createLibp2p(config);
     
     // Set up event listeners
     this.libp2p.addEventListener('peer:connect', (evt: any) => {

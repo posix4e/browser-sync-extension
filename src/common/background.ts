@@ -216,7 +216,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
     } catch (error) {
       console.error('Error handling message:', error);
-      sendResponse({ success: false, error: error.message });
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      sendResponse({ success: false, error: errorMessage });
     }
   })();
   
