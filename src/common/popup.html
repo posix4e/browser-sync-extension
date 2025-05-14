@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser History Sync</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 300px;
+      padding: 10px;
+    }
+    .status {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .connected {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .disconnected {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    button.disconnect {
+      background-color: #f44336;
+    }
+    button.disconnect:hover {
+      background-color: #d32f2f;
+    }
+    .stats {
+      margin-top: 10px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Browser History Sync</h2>
+  
+  <div id="status" class="status disconnected">
+    Status: Disconnected
+  </div>
+  
+  <button id="syncNow">Sync Now</button>
+  <button id="connect">Connect</button>
+  <button id="disconnect" class="disconnect">Disconnect</button>
+  <button id="openOptions">Settings</button>
+  
+  <div class="stats">
+    <p>Last sync: <span id="lastSync">Never</span></p>
+    <p>Peers connected: <span id="peerCount">0</span></p>
+    <p>Items synced: <span id="syncCount">0</span></p>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

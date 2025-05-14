@@ -1,0 +1,62 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Build extensions
+      run: npm run build
+    
+    - name: Create placeholder icons for testing
+      run: |
+        mkdir -p dist/chrome/icons
+        mkdir -p dist/firefox/icons
+        mkdir -p dist/safari/icons
+        
+        # Create simple placeholder icons
+        convert -size 16x16 xc:blue dist/chrome/icons/icon16.png
+        convert -size 48x48 xc:blue dist/chrome/icons/icon48.png
+        convert -size 128x128 xc:blue dist/chrome/icons/icon128.png
+        
+        cp dist/chrome/icons/* dist/firefox/icons/
+        cp dist/chrome/icons/* dist/safari/icons/
+    
+    - name: Run tests
+      uses: mujo-code/puppeteer-headful@16.6.0
+      env:
+        CI: 'true'
+      with:
+        args: npm test
+    
+    - name: Upload extension artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: browser-extensions
+        path: |
+          dist/chrome/
+          dist/firefox/
+          dist/safari/
+    
+    - name: Upload screenshots
+      uses: actions/upload-artifact@v3
+      with:
+        name: screenshots
+        path: screenshots/

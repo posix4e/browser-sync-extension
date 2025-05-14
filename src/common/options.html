@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser History Sync Settings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="text"], 
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <h1>Browser History Sync Settings</h1>
+  
+  <div class="section">
+    <h2>P2P Connection</h2>
+    
+    <div class="form-group">
+      <label for="discoveryServer">Discovery Server:</label>
+      <select id="discoveryServer">
+        <option value="google">Google STUN/TURN</option>
+        <option value="twilio">Twilio STUN/TURN</option>
+        <option value="custom">Custom Server</option>
+      </select>
+    </div>
+    
+    <div id="customServerFields" style="display: none;">
+      <div class="form-group">
+        <label for="customServerUrl">Custom Server URL:</label>
+        <input type="text" id="customServerUrl" placeholder="stun:stun.example.com:3478">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="sharedSecret">Shared Secret:</label>
+      <input type="password" id="sharedSecret" placeholder="Enter a strong shared secret">
+      <small>This secret will be used to encrypt your history data. Keep it safe and share it only with devices you want to sync with.</small>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Sync Settings</h2>
+    
+    <div class="form-group">
+      <label for="syncInterval">Sync Interval (minutes):</label>
+      <input type="number" id="syncInterval" min="5" max="1440" value="30">
+    </div>
+    
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="syncOnStartup" checked>
+        Sync on browser startup
+      </label>
+    </div>
+    
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="syncOnNewHistory" checked>
+        Sync immediately when new history items are added
+      </label>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Privacy</h2>
+    
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="excludeIncognito" checked>
+        Don't sync history from incognito/private browsing
+      </label>
+    </div>
+    
+    <div class="form-group">
+      <label for="excludeDomains">Domains to exclude from sync (one per line):</label>
+      <textarea id="excludeDomains" rows="4" placeholder="example.com&#10;banking.com"></textarea>
+    </div>
+  </div>
+  
+  <button id="saveSettings">Save Settings</button>
+  
+  <div id="status" class="status" style="display: none;"></div>
+  
+  <script src="options.js"></script>
+</body>
+</html>
